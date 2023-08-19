@@ -20,17 +20,18 @@ const CardHeading = styled(Box)(() => ({
   "& .rate": {},
 }));
 
-const MovieCard = ({ title, rating, description, imageUrl }) => {
-  const onClickHandler = () => {};
+const MovieCard = ({ movie }) => {
+  const { original_title, overview, poster_path, vote_average } = movie;
+
   return (
     <Link to="/movie-details" style={{ textDecoration: "none" }}>
-      <Card onClick={() => onClickHandler()} sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="220"
-            image={"https://placebear.com/g/400/300"}
-            alt="green iguana"
+            image={poster_path}
+            alt="movie poster"
           />
           <CardContent>
             <CardHeading>
@@ -39,13 +40,30 @@ const MovieCard = ({ title, rating, description, imageUrl }) => {
                 gutterBottom
                 variant="h5"
                 component="div"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: "1",
+                  WebkitBoxOrient: "vertical",
+                }}
               >
-                Lizard
+                {original_title}
               </Typography>
-              <Box className="rate">Rate</Box>
+              <Box className="rate">{vote_average}</Box>
             </CardHeading>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over...
+            <Typography
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: "2",
+                WebkitBoxOrient: "vertical",
+              }}
+              variant="body2"
+              color="text.secondary"
+            >
+              {overview}
             </Typography>
           </CardContent>
         </CardActionArea>
