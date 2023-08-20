@@ -26,9 +26,6 @@ const CardHeading = styled(Box)(() => ({
 
 const MovieCard = ({ movie }) => {
   const { id, original_title, overview, poster_path, vote_average } = movie;
-  const getPoster = (poster_path) => {
-    return `https://www.themoviedb.org/t/p/w220_and_h330_face/${poster_path}`;
-  };
   return (
     <Link to={`/movie-details/${id}`} style={{ textDecoration: "none" }}>
       <Card sx={{ maxWidth: 345 }}>
@@ -36,7 +33,7 @@ const MovieCard = ({ movie }) => {
           <CardMedia
             component="img"
             height="220"
-            image={getPoster(poster_path)}
+            image={`${process.env.REACT_APP_IMAGE_URL}/${poster_path}`}
             alt="movie poster"
             style={{ objectFit: "fill" }}
           />

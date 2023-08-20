@@ -12,7 +12,7 @@ function useDebounce(value, setCurrentPage) {
     return () => {
       clearTimeout(handler);
     };
-  }, [value]);
+  }, [value, setCurrentPage]);
 
   return [debouncedValue, setDebouncedValue];
 }

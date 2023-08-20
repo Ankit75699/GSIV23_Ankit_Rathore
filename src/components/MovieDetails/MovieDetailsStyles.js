@@ -7,17 +7,13 @@ export const ContainerBox = styled(Grid)(() => ({
   "& .MovieDetails": {
     display: "flex",
     gap: "30px",
-    "& .MovieDescriptionLeft": {
-      width: "14%",
-      "& img": {
-        width: "100%",
-      },
-    },
+
     "& .MovieDescriptionRight": {
-      width: "80%",
       "& .titleBox": {
         fontWeight: "600",
-        fontSize: "20px",
+        fontSize: "22px",
+        display: "flex",
+        gap: "10px",
         "& p": {
           marginTop: 0,
         },
@@ -26,15 +22,25 @@ export const ContainerBox = styled(Grid)(() => ({
         marginTop: "15px",
         marginBottom: "15px",
       },
+      "& rightContentTextColor": {
+        color: "#4A4A4A",
+      },
+    },
+    "& .MovieDescriptionLeft": {
+      "& img": {
+        height: "25vh",
+        border: "2px solid grey",
+      },
     },
     "@media (max-width: 767px)": {
       flexWrap: "wrap",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       "& .MovieDescriptionLeft": {
-        width: "100%",
-        marginBottom: "20px",
-      },
-      "& .MovieDescriptionRight": {
-        width: "100%",
+        "& img": {
+          height: "auto",
+        },
       },
     },
   },

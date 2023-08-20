@@ -1,37 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies, searchMovies } from "../../redux/Actions/action";
 import Header from "../Header/Header";
 import Pagination from "@mui/material/Pagination";
-import { styled } from "@mui/material/styles";
 import useDebounce from "../../hooks/useDebounce";
 import MovieList from "./MovieList";
-
-const ContainerBox = styled(Grid)(({ theme }) => ({
-  padding: "0px 30px",
-  marginTop: "0px",
-  "& .cards": {
-    marginBottom: "0px",
-    "& .MuiPaper-root": {
-      boxShadow: "2px 2px 10px #c1c1c1",
-      borderRadius: "15px",
-      "@media (max-width: 600px)": {
-        maxWidth: "100%",
-      },
-    },
-    "&:hover": {
-      scale: "1.1",
-      transform: "all 1s",
-    },
-  },
-}));
-
-const PaginateBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "flex-end",
-  margin: theme.spacing(2),
-}));
+import { ContainerBox, PaginateBox } from "./HomeStyles";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,6 +15,7 @@ const Home = () => {
   const {
     movies: { results, total_pages },
     isFetching,
+    error,
   } = useSelector((state) => state.fetchMoviesReducer);
 
   const [debouncedSearch] = useDebounce(searchInput, setCurrentPage);
@@ -77,6 +53,10 @@ const Home = () => {
       );
     }
 
+    if (error) {
+      return <h1>Something went wrong</h1>;
+    }
+
     return <MovieList movies={results} />;
   };
 
@@ -92,7 +72,7 @@ const Home = () => {
             data-testid="pagination"
             variant="outlined"
             page={currentPage}
-            count={total_pages}
+            count={total_pages > 500 ? 500 : total_pages}
             onChange={handlePageChange}
           />
         </PaginateBox>
