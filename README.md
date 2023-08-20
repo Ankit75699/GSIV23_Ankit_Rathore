@@ -1,3 +1,7 @@
+# Project Title
+
+A brief description of what this project does and who it's for
+
 
 ## Run Locally
 
@@ -54,6 +58,13 @@ To Run Test
    why:- Demonstrates my proficiency in structuring complex applications, handling state transitions, and managing user interactions.
 ```
 
+## Issues Faced during developement
+```bash
+1) The upcoming API includes responses for movies released on previous dates as well. However, it does not provide data necessary for sorting the movies by the latest releases first. So sorting not performed in the app for latest release.
+
+2) The search API does not include information about the directors and cast of the movies within the response object. As a result, I have implemented a workaround by manually specifying the cast as "Actors1" and "Actors2".
+```
+
 ## Solution
 ```bash
 If I had 4 hours more I will integrate the typescript in the app by adding using typescript library
@@ -62,6 +73,3 @@ If I had 4 hours more I will integrate the typescript in the app by adding using
 ```bash
 https://gsiv23-ankit-rathore.firebaseapp.com/
 ```
-
-
-
