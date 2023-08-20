@@ -8,7 +8,7 @@ const options = {
 };
 
 export const fetchMovies = (pageNo) => {
-  const url = `${process.env.REACT_APP_API_BASE_URL}/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNo}&sort_by=primary_release_date.asc`;
+  const url = `${process.env.REACT_APP_API_BASE_URL}/3/movie/upcoming?include_adult=false&include_video=false&language=en-US&page=${pageNo}&sort_by=primary_release_date.dsc`;
   return (dispatch) => {
     dispatch({ type: "GET_MOVIES_REQUEST" });
     fetch(url, options)
