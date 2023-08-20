@@ -41,7 +41,7 @@ To Run Test
 1. Movie Cards on List Page:- Display upcoming movies in a visually appealing manner using movie cards.
    why:- Demonstrates my proficiency in UI design and data presentation.
 
-2. Pagination for List Page:- mplement pagination to ensure smooth loading and browsing of movie listings.
+2. Pagination for List Page:- implement pagination to ensure smooth loading and browsing of movie listings.
    why:- This showcases my ability to manage large data sets and provide a seamless user experience.
 
 3. Search Functionality:
