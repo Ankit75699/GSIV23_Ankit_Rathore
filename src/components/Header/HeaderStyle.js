@@ -7,21 +7,20 @@ export const Search = styled("div")(({ theme }) => ({
   backgroundColor: "#e1e1e1",
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "30% !important",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
 }));
 
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 1),
   height: "100%",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  backgroundColor: "#DFDFDF",
+  "& path": {
+    fill: "grey",
+  },
 }));
 
 export const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -30,9 +29,13 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
+    width: "350px",
+    backgroundColor: "#DFDFDF",
+    [theme.breakpoints.down("md")]: {
+      width: "280px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "170px",
     },
   },
 }));

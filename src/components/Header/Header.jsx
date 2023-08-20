@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Toolbar, IconButton } from "@mui/material";
+import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
+import { Link, useParams } from "react-router-dom";
 import {
   AppBarBox,
   Search,
@@ -9,37 +10,48 @@ import {
   StyledInputBase,
 } from "./HeaderStyle";
 
-const Header = () => {
+export const HeaderConditionalRender = ({ params, onChangeHandler }) => {
+  const isMovieDetailsPage = !!params?.id;
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBarBox position="static">
-        <Toolbar>
+    <AppBarBox position="static">
+      <Toolbar>
+        {isMovieDetailsPage ? (
+          <Typography data-testid="movie-details" variant="h6">
+            Movie Details
+          </Typography>
+        ) : (
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{ zIndex: 10 }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onChange={(event) => onChangeHandler(event.target.value)}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <HomeIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBarBox>
-    </Box>
+        )}
+
+        <Box sx={{ flexGrow: 1 }} />
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <IconButton edge="end" aria-label="home" color="inherit">
+            <HomeIcon />
+          </IconButton>
+        </Link>
+      </Toolbar>
+    </AppBarBox>
+  );
+};
+
+const Header = ({ onChangeHandler }) => {
+  const params = useParams();
+
+  return (
+    <HeaderConditionalRender
+      params={params}
+      onChangeHandler={onChangeHandler}
+    />
   );
 };
 
