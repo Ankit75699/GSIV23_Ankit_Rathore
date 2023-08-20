@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../../redux/Actions/action";
-import MovieCard from "../Movies/MovieCard";
+import { fetchMovies, searchMovies } from "../../redux/Actions/action";
 import Header from "../Header/Header";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
+import useDebounce from "../../hooks/useDebounce";
+import MovieList from "./MovieList";
 
-// Styled components
 const ContainerBox = styled(Grid)(({ theme }) => ({
   padding: "0px 30px",
   marginTop: "0px",
@@ -20,6 +20,10 @@ const ContainerBox = styled(Grid)(({ theme }) => ({
         maxWidth: "100%",
       },
     },
+    "&:hover": {
+      scale: "1.1",
+      transform: "all 1s",
+    },
   },
 }));
 
@@ -30,62 +34,65 @@ const PaginateBox = styled(Box)(({ theme }) => ({
 }));
 
 const Home = () => {
-  // State and Redux setup
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchInput, setSearchInput] = useState(null);
   const dispatch = useDispatch();
-  const { movies, isFetching } = useSelector(
-    (state) => state.fetchMoviesReducer
-  );
+  const {
+    movies: { results, total_pages },
+    isFetching,
+  } = useSelector((state) => state.fetchMoviesReducer);
 
-  // Fetch movies on page change
+  const [debouncedSearch] = useDebounce(searchInput, setCurrentPage);
+
   useEffect(() => {
-    dispatch(fetchMovies(currentPage));
-  }, [dispatch, currentPage]);
+    if (debouncedSearch) {
+      dispatch(searchMovies(debouncedSearch, currentPage));
+      return;
+    }
 
-  // Handle page change
+    dispatch(fetchMovies(currentPage));
+  }, [dispatch, currentPage, debouncedSearch]);
+
   const handlePageChange = (_, value) => {
     setCurrentPage(value);
   };
 
+  const onChangeHandler = (value) => {
+    setSearchInput(value);
+  };
+
+  const renderContent = () => {
+    if (isFetching) {
+      return (
+        <Box
+          data-testid="loading-spinner"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="85vh"
+          width="100%"
+        >
+          <CircularProgress color="inherit" />
+        </Box>
+      );
+    }
+
+    return <MovieList movies={results} />;
+  };
+
   return (
     <>
-      <Header />
+      <Header onChangeHandler={onChangeHandler} />
       <ContainerBox container spacing={4}>
-        {isFetching ? (
-          <Box
-            data-testid="loading-spinner"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="85vh"
-            width="100%"
-          >
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          movies?.results?.map((movie) => (
-            <Grid
-              className="cards"
-              item
-              xs={12}
-              sm={6}
-              md={3}
-              lg={2}
-              key={movie.id}
-              data-testid="movie-card"
-            >
-              <MovieCard movie={movie} />
-            </Grid>
-          ))
-        )}
+        {renderContent()}
       </ContainerBox>
-      {movies?.total_pages > 1 && (
+      {total_pages > 1 && (
         <PaginateBox>
           <Pagination
             data-testid="pagination"
             variant="outlined"
             page={currentPage}
-            count={movies.total_pages}
+            count={total_pages}
             onChange={handlePageChange}
           />
         </PaginateBox>

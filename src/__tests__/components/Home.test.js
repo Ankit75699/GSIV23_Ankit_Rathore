@@ -3,7 +3,6 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { fetchMovies } from "../../redux/Actions/action";
 import Home from "../../components/Home/Home";
 
 const middlewares = [thunk];
@@ -57,7 +56,7 @@ describe("Home Component", () => {
   it("renders loading state when movies are fetching", () => {
     const initialState = {
       fetchMoviesReducer: {
-        movies: null,
+        movies: {},
         isFetching: true,
       },
     };

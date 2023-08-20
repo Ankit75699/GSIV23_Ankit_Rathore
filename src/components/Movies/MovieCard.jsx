@@ -14,24 +14,31 @@ const CardHeading = styled(Box)(() => ({
   marginBottom: "10px",
   alignItems: "center",
   "& .heading": {
-    fontSize: "20px",
+    fontSize: "13px",
     marginBottom: "0px",
+    fontWeight: "600",
+    color: "#4A4A4A",
   },
-  "& .rate": {},
+  "& .rate": {
+    color: "#9B9B9B",
+  },
 }));
 
 const MovieCard = ({ movie }) => {
-  const { original_title, overview, poster_path, vote_average } = movie;
-
+  const { id, original_title, overview, poster_path, vote_average } = movie;
+  const getPoster = (poster_path) => {
+    return `https://www.themoviedb.org/t/p/w220_and_h330_face/${poster_path}`;
+  };
   return (
-    <Link to="/movie-details" style={{ textDecoration: "none" }}>
+    <Link to={`/movie-details/${id}`} style={{ textDecoration: "none" }}>
       <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             component="img"
             height="220"
-            image={poster_path}
+            image={getPoster(poster_path)}
             alt="movie poster"
+            style={{ objectFit: "fill" }}
           />
           <CardContent>
             <CardHeading>
@@ -50,7 +57,7 @@ const MovieCard = ({ movie }) => {
               >
                 {original_title}
               </Typography>
-              <Box className="rate">{vote_average}</Box>
+              <Box className="rate">{`(${vote_average})`}</Box>
             </CardHeading>
             <Typography
               sx={{
@@ -62,6 +69,7 @@ const MovieCard = ({ movie }) => {
               }}
               variant="body2"
               color="text.secondary"
+              style={{ fontSize: "12px", color: "#544f4f" }}
             >
               {overview}
             </Typography>
