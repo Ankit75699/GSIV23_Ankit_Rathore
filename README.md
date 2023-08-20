@@ -57,3 +57,11 @@ To Run Test
 ## Solution
 ```bash
 If I had 4 hours more I will integrate the typescript in the app by adding using typescript library
+```
+## Firebase deploy app URL
+```bash
+https://gsiv23-ankit-rathore.firebaseapp.com/
+```
+
+
+
